@@ -14,6 +14,12 @@ java {
 	}
 }
 
+configurations {
+	compileOnly {
+		extendsFrom(configurations.annotationProcessor.get())
+	}
+}
+
 repositories {
 	mavenCentral()
 }
@@ -36,6 +42,14 @@ dependencies {
 	testImplementation("org.testcontainers:postgresql")
 	testImplementation("org.testcontainers:r2dbc")
 	testRuntimeOnly("org.junit.platform:junit-platform-launcher")
+	implementation("org.flywaydb:flyway-core:10.16.0")
+	implementation("org.flywaydb:flyway-database-postgresql:10.16.0")
+	runtimeOnly("org.springframework:spring-jdbc")
+	// https://mvnrepository.com/artifact/org.springframework.boot/spring-boot-configuration-processor
+	implementation("org.springframework.boot:spring-boot-configuration-processor:3.3.2")
+	// https://mvnrepository.com/artifact/com.squareup.okhttp3/mockwebserver
+	testImplementation("com.squareup.okhttp3:mockwebserver")
+
 }
 
 kotlin {
