@@ -4,6 +4,7 @@ import com.polarbookshop.orderservice.config.DataConfig
 import org.junit.jupiter.api.Test
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.boot.test.autoconfigure.data.r2dbc.DataR2dbcTest
+import org.springframework.boot.testcontainers.service.connection.ServiceConnection
 import org.springframework.context.annotation.Import
 import org.springframework.test.context.DynamicPropertyRegistry
 import org.springframework.test.context.DynamicPropertySource
@@ -20,6 +21,7 @@ class OrderRepositoryR2dbcTests {
 
     companion object {
         @Container
+        @ServiceConnection
         val postgresql: PostgreSQLContainer<*> = PostgreSQLContainer(DockerImageName.parse("postgres:latest"));
 
         @DynamicPropertySource
