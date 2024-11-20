@@ -22,7 +22,7 @@ class OrderRepositoryR2dbcTests {
     companion object {
         @Container
         @ServiceConnection
-        val postgresql: PostgreSQLContainer<*> = PostgreSQLContainer(DockerImageName.parse("postgres:latest"));
+        val postgresql: PostgreSQLContainer<*> = PostgreSQLContainer(DockerImageName.parse("postgres:14.4"));
 
         @DynamicPropertySource
         fun postgresqlProperties(registry: DynamicPropertyRegistry) {
