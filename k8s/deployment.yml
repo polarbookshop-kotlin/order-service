@@ -1,0 +1,49 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: order-service
+  labels:
+    app: order-service
+spec:
+  replicas: 2
+  selector:
+    matchLabels: 
+      app: order-service
+  template:
+    metadata:
+      labels:
+        app: order-service
+    spec:
+      containers:
+        - name: order-service
+          image: order-service
+          imagePullPolicy: IfNotPresent
+          lifecycle:
+            preStop:
+              exec:
+                command:
+                  - sh
+                  - -c 
+                  - sleep 
+                  - "5"
+          ports:
+            - containerPort: 9002
+          env:
+            - name: POLAR_CATALOG_SERVICE_URI
+              value: http://catalog-service
+            - name: SPRING_CLOUD_CONFIG_URI
+              value: http://config-service
+            - name: SPRING_RABBITMQ_HOST
+              value: polar-rabbitmq
+            - name: SPRING_R2DBC_URL
+              value: r2dbc:postgresql://polar-postgres/polardb_order
+            - name: SPRING_FLYWAY_URL
+              value: jdbc:postgresql://polar-postgres/polardb_order
+
+          resources:
+            requests:
+              memory: "512Mi"  # Minimum memory required by the container to run properly
+              cpu: "250m"      # Minimum CPU required by the container
+            limits:
+              memory: "1024Mi" # Maximum memory the container can use
+              cpu: "500m"      # Maximum CPU the container can use
